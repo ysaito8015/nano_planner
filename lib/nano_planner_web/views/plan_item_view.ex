@@ -8,7 +8,6 @@ defmodule NanoPlannerWeb.PlanItemView do
 
   defp format_starts_at(item) do
     time_zone = Application.get_env(:nano_planner, :default_time_zone)
-    w = format_wday(item.starts_at)
 
     if item.starts_at.year == Timex.now(time_zone).year do
       Strftime.format!(item.starts_at, "%-m月%-d日 (#{w}) %H:%M")
@@ -18,7 +17,6 @@ defmodule NanoPlannerWeb.PlanItemView do
   end
 
   defp format_ends_at(item) do
-    w = format_wday(item.ends_at)
 
     cond do
       Timex.to_date(item.ends_at) == Timex.to_date(item.starts_at) ->
@@ -37,10 +35,8 @@ defmodule NanoPlannerWeb.PlanItemView do
     Strftime.format!(datetime, "%Y年%-m月%-d日 (#{w}) %H:%M")
   end
 
+  @weekday_names ~w(日 月 火 水 木 金 土)
   defp format_wday(datetime) do
-    Enum.at(
-      ~w(日 月 火 水 木 金 土),
-      Timex.days_to_beginning_of_week(datetime, :sun)
-    )
+    Enum.at(@weekday_names, Timex.days_to_beginning_of_week(datetime, :sun))
   end
 end
