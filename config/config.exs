@@ -13,8 +13,13 @@ config :nano_planner,
 # Configures the endpoint
 config :nano_planner, NanoPlannerWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "kps8yDrZtl8+M3P2USEuThL59JBPPdMESwoayN1f4Q9a4YTyhr0fdO6cMcoF06Ef",
-  render_errors: [view: NanoPlannerWeb.ErrorView, accepts: ~w(html json), layout: false],
+  secret_key_base:
+    "kps8yDrZtl8+M3P2USEuThL59JBPPdMESwoayN1f4Q9a4YTyhr0fdO6cMcoF06Ef",
+  render_errors: [
+    view: NanoPlannerWeb.ErrorView,
+    accepts: ~w(html json),
+    layout: false
+  ],
   pubsub_server: NanoPlanner.PubSub,
   live_view: [signing_salt: "7eTMtacR"]
 
