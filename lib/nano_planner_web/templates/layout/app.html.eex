@@ -9,22 +9,8 @@
       href: Routes.static_path(@conn, "/css/app.css") %>
     <%= content_tag :script, "",
       src: Routes.static_path(@conn, "/js/app.js") %>
-    <%= tag :link, rel: "shortcut icon",
-      href: Routes.static_path(@conn, "/images/nano_planner.ico") %>
-    <%= tag :link, rel: "apple-touch-icon",
-      href: Routes.static_path(@conn, "/images/clock256.png") %>
   </head>
   <body>
-    <header>
-      <h1>
-        <%= link "NanoPlanner", to: Routes.top_path(@conn, :index, []) %>
-      </h1>
-    </header>
-    <main>
-      <%= @inner_content %>
-    </main>
-    <footer>
-      &copy; 2020 Oiax Inc.
-    </footer>
+    <%= @inner_content %>
   </body>
 </html>

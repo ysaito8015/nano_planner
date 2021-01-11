@@ -11,9 +11,5 @@ defmodule NanoPlannerWeb.Router do
 
   scope "/", NanoPlannerWeb do
     pipe_through :browser
-
-    get "/", TopController, :index
-    get "/plan_items", PlanItemController, :index
-    get "/plan_items/:id", PlanItemController, :show
   end
 end

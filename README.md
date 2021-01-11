@@ -6,17 +6,16 @@
 
 * macOS Catalina v10.15
 * macOS Mojave v10.14
-* macOS High Sierra v10.13
 * Ubuntu Desktop 20.04 LTS (64-bit)
 
 ## 稼働条件
 
-* Erlang 22.3.4.10
-* Elixir 1.10.4
-* Phoenix 1.5.5
-* PostgreSQL 12.4
-* Node.js 12.18.4
-* npm 6.14.6
+* Erlang/OTP 23.2.1
+* Elixir 1.11.3
+* Phoenix 1.5.7
+* PostgreSQL 12.5
+* Node.js 14.15.4
+* npm 6.14.10
 * webpack 4.41.5
 
 Ubuntu 20.04 では、さらに次のコマンドで `inotify-tools` パッケージをインストールし、 `max_user_watches` の上限を変更してください。
@@ -46,7 +45,7 @@ $ mix phx.server
 
 ## Copyright and License
 
-Copyright (c) 2020, Tsutomu Kuroda.
+Copyright (c) 2021, Tsutomu Kuroda.
 
 NanoPlanner source code is licensed under the [MIT License](LICENSE.md).
 

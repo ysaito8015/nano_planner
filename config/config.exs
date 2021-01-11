@@ -13,19 +13,10 @@ config :nano_planner,
 # Configures the endpoint
 config :nano_planner, NanoPlannerWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base:
-    "gkahxsEnj45EPb2dnJNVLJnAtGcA3bS/20ddybQMHJWOvQV8Xn9I7JAlHg7dOaW7",
-  render_errors: [
-    view: NanoPlannerWeb.ErrorView,
-    accepts: ~w(html json),
-    layout: false
-  ],
+  secret_key_base: "kps8yDrZtl8+M3P2USEuThL59JBPPdMESwoayN1f4Q9a4YTyhr0fdO6cMcoF06Ef",
+  render_errors: [view: NanoPlannerWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: NanoPlanner.PubSub,
-  live_view: [signing_salt: "GLpuVLhQ"]
-
-# Configures the default time zone
-config :nano_planner,
-  default_time_zone: "Asia/Tokyo"
+  live_view: [signing_salt: "7eTMtacR"]
 
 # Configures Elixir's Logger
 config :logger, :console,
