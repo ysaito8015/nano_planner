@@ -17,8 +17,9 @@ defmodule NanoPlanner.Schedule do
     |> convert_datetime
   end
 
-  defp convert_datetime(items) when is_list(items)
-  Enum.map(items, &convert_datetime(&1))
+  defp convert_datetime(items) when is_list(items) do
+    Enum.map(items, &convert_datetime(&1))
+  end
 
   defp convert_datetime(%PlanItem{} = item) do
     alias Timex.Timezone
