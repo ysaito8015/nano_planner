@@ -8,7 +8,7 @@ defmodule NanoPlanner.Schedule.PlanItem do
     field :starts_at, :utc_datetime
     field :ends_at, :utc_datetime
 
-    timestamps([type: :utc_datetime])
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

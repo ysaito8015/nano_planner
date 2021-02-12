@@ -1,11 +1,13 @@
 import NanoPlanner.Repo
 alias NanoPlanner.Schedule.PlanItem
 
-time0 = Timex.now("Asia/Tokyo")
-        |> Timex.beginning_of_day
-        |> Timex.Timezone.convert("Etc/UTC")
-        |> DateTime.truncate(:second)
-time1 = time0 |> Timex.beginning_of_year
+time0 =
+  Timex.now("Asia/Tokyo")
+  |> Timex.beginning_of_day()
+  |> Timex.Timezone.convert("Etc/UTC")
+  |> DateTime.truncate(:second)
+
+time1 = time0 |> Timex.beginning_of_year()
 
 insert!(%PlanItem{
   name: "読書",
