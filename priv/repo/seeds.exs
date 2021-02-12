@@ -1,17 +1,17 @@
 import NanoPlanner.Repo
 alias NanoPlanner.Schedule.PlanItem
 
-insert! %PlanItem{
+insert!(%PlanItem{
   name: "読書",
   description: "『走れメロス』を読む"
-}
+})
 
-insert! %PlanItem{
+insert!(%PlanItem{
   name: "買い物",
   description: "洗剤を買う"
-}
+})
 
-insert! %PlanItem{
+insert!(%PlanItem{
   name: "帰省",
-  description: "新幹線の指定席を取る。お土産を買う。"
-}
+  description: "新幹線の指定席を取る。\nお土産を買う。"
+})
