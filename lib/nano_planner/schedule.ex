@@ -7,20 +7,27 @@ defmodule NanoPlanner.Schedule do
   def list_plan_items do
     PlanItem
     |> order_by(asc: :starts_at, asc: :ends_at, asc: :id)
-    |> Repo.all
+    |> Repo.all()
     |> convert_datetime
   end
 
-  defp convert_datetime(items) do
+  def get_plan_item!(id) do
+    PlanItem
+    |> Repo.get!(id)
+    |> convert_datetime
+  end
+
+  defp convert_datetime(items) when is_list(items)
+  Enum.map(items, &convert_datetime(&1))
+
+  defp convert_datetime(%PlanItem{} = item) do
     alias Timex.Timezone
 
     time_zone = Application.get_env(:nano_planner, :default_time_zone)
 
-    Enum.map items, fn(item) ->
-      Map.merge(item, %{
-        starts_at: Timezone.convert(item.starts_at, time_zone),
-        ends_at: Timezone.convert(item.ends_at, time_zone)
-      })
-    end
+    Map.merge(item, %{
+      starts_at: Timezone.convert(item.starts_at, time_zone),
+      ends_at: Timezone.convert(item.ends_at, time_zone)
+    })
   end
 end

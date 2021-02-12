@@ -26,6 +26,6 @@ insert!(%PlanItem{
 insert!(%PlanItem{
   name: "帰省",
   description: "新幹線の指定席を取る。\nお土産を買う。",
-  starts_at: Timex.shift(time0, years: 1, days: -2),
-  ends_at: Timex.shift(time0, years: 1, days: 3)
+  starts_at: Timex.shift(time1, years: 1, days: -2),
+  ends_at: Timex.shift(time1, years: 1, days: 3)
 })
