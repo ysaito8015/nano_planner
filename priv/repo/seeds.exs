@@ -41,5 +41,5 @@ insert!(%PlanItem{
   name: "姉の出張",
   description: "札幌",
   starts_at: Timex.shift(time0, years: -1, days: 10),
-  ends_at: Timex.shift(time0, hours: 17)
+  ends_at: Timex.shift(time0, days: 1, hours: 17)
 })

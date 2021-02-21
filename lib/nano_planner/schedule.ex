@@ -14,13 +14,26 @@ defmodule NanoPlanner.Schedule do
     t1 = t0 |> Timex.shift(hours: 24)
 
     PlanItem
-    |> where([i], i.starts_at >= ^t0 and i.starts_at < ^t1)
+    |> where(
+      [i],
+      (i.starts_at >= ^t0 and i.starts_at < ^t1) or
+        (i.ends_at > ^t0 and i.ends_at <= ^t1)
+    )
+    |> fetch_plan_items()
+  end
+
+  def list_continued_plan_items do
+    t0 = current_time() |> Timex.beginning_of_day()
+    t1 = t0 |> Timex.shift(hours: 24)
+
+    PlanItem
+    |> where([i], i.starts_at < ^t0 and i.ends_at > ^t1)
     |> fetch_plan_items()
   end
 
   defp fetch_plan_items(query) do
     query
-    |> order+by(asc: :starts+at, asc: :ends+at, asc: :id)
+    |> order_by(asc: :starts_at, asc: :ends_at, asc: :id)
     |> Repo.all()
     |> convert_datetime()
   end
