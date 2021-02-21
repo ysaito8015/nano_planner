@@ -1,78 +1,67 @@
 const path = require('path');
 const glob = require('glob');
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const GlobImporter = require('node-sass-glob-importer');
+const webpack = require('webpack');
 
-module.exports = (env, options) => ({
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
-      new OptimizeCSSAssetsPlugin({})
-    ]
-  },
-  entry: {
-      './js/app.js': ['./js/app.js'].concat(glob.sync('./vendor/**/*.js'))
-  },
-  output: {
-    filename: 'app.js',
-    path: path.resolve(__dirname, '../priv/static/js')
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
-      {
-        test: /\.scss/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              url: false,
-              importLoaders: 2
-            }
-          },
-          {
-            loader: 'sass-loader',
-            options: {
-              importer: GlobImporter()
-            }
+module.exports = (env, options) => {
+  const devMode = options.mode !== 'production';
+
+  return {
+    optimization: {
+      minimizer: [
+        new TerserPlugin({ cache: true, parallel: true, sourceMap: devMode }),
+        new OptimizeCSSAssetsPlugin({})
+      ]
+    },
+    entry: {
+      'app': glob.sync('./vendor/**/*.js').concat(['./js/app.js'])
+    },
+    output: {
+      filename: '[name].js',
+      path: path.resolve(__dirname, '../priv/static/js'),
+      publicPath: '/js/'
+    },
+    devtool: devMode ? 'eval-cheap-module-source-map' : undefined,
+    module: {
+      rules: [
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
           }
-        ]
-      },
-      {
-        test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: {
-          loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+        },
+        {
+          test: /\.[s]?css$/,
+          use: [
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader'
+          ],
         }
-      },
-      {
-        test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: {
-          loader: 'file-loader'
+      ]
+    },
+    plugins: [
+      new MiniCssExtractPlugin({ filename: '../css/app.css' }),
+      new webpack.ProvidePlugin({
+        $: "jquery",
+        jQuery: "jquery"
+      }),
+      new CopyWebpackPlugin([
+        {
+          from: 'static/',
+          to: '../'
+        },
+        {
+          from: 'node_modules/@fortawesome/fontawesome-free/webfonts/',
+          to: '../webfonts/'
         }
-      }
+      ])
     ]
-  },
-  plugins: [
-    new MiniCssExtractPlugin({ filename: '../css/app.css' }),
-    new CopyWebpackPlugin([
-      {
-        from: 'static/',
-        to: '../'
-      },
-      {
-        from: 'node_modules/@fortawesome/fontawesome-free/webfonts/',
-        to: '../webfonts/'
-      },
-    ])
-  ]
-});
+    .concat(devMode ? [new HardSourceWebpackPlugin()] : [])
+  }
+};

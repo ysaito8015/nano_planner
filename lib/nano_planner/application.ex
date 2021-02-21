@@ -6,14 +6,17 @@ defmodule NanoPlanner.Application do
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
       # Start the Ecto repository
       NanoPlanner.Repo,
-      # Start the endpoint when the application starts
+      # Start the Telemetry supervisor
+      NanoPlannerWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: NanoPlanner.PubSub},
+      # Start the Endpoint (http/https)
       NanoPlannerWeb.Endpoint
-      # Starts a worker by calling: NanoPlanner.Worker.start_link(arg)
-      # {NanoPlanner.Worker, arg},
+      # Start a worker by calling: NanoPlanner.Worker.start_link(arg)
+      # {NanoPlanner.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

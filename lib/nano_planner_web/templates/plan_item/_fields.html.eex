@@ -1,30 +1,16 @@
 <div class="form-group">
-  <%= label @f, :name, dgettext("schema.plan_item", "name") %>
-  <%= bootstrap_text_input @f, :name, required: true %>
-  <%= bootstrap_feedback @f, :name %>
+  <%= label @f, :name, "件名" %>
+  <%= text_input @f, :name, class: "form-control", required: true %>
 </div>
 <div class="form-group">
-  <%= label @f, :description, dgettext("schema.plan_item", "description") %>
-  <%= bootstrap_textarea @f, :description, rows: 4 %>
-  <%= bootstrap_feedback @f, :description %>
+  <%= label @f, :description, "説明" %>
+  <%= textarea @f, :description, class: "form-control", rows: 4 %>
 </div>
 <div class="form-group">
-  <%= boostrap_custom_checkbox @f, :all_day,
-    dgettext("schema.plan_item", "all_day") %>
+  <%= label @f, :starts_at, "開始日時" %>
+  <%= render "_date_and_time.html", f: @f, prefix: "s" %>
 </div>
-<div class="form-group js-date-and-time">
-  <%= label @f, :starts_at, dgettext("schema.plan_item", "starts_at") %>
-  <%= render "_date_and_time.html", f: @f, prefix: "s", field: :starts_at %>
-</div>
-<div class="form-group js-date-and-time">
-  <%= label @f, :ends_at, dgettext("schema.plan_item", "ends_at") %>
-  <%= render "_date_and_time.html", f: @f, prefix: "e", field: :ends_at %>
-</div>
-<div class="form-group js-date-picker">
-  <%= label @f, :starts_on, dgettext("schema.plan_item", "starts_on") %>
-  <%= render "_date_picker.html", f: @f, field: :starts_on %>
-</div>
-<div class="form-group js-date-picker">
-  <%= label @f, :starts_on, dgettext("schema.plan_item", "ends_on") %>
-  <%= render "_date_picker.html", f: @f, field: :ends_on %>
+<div class="form-group">
+  <%= label @f, :ends_at, "終了日時" %>
+  <%= render "_date_and_time.html", f: @f, prefix: "e" %>
 </div>

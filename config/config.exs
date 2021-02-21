@@ -3,9 +3,10 @@
 #
 # This configuration file is loaded before any dependency and
 # is restricted to this project.
-use Mix.Config
 
 # General application configuration
+use Mix.Config
+
 config :nano_planner,
   ecto_repos: [NanoPlanner.Repo]
 
@@ -13,23 +14,26 @@ config :nano_planner,
 config :nano_planner, NanoPlannerWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base:
-    "4lPeMuSkPKsaRx2zl5aFgvS2cJqSrqc7fd6FBro3cgzkgGXJMEDwYa2oVeCcs3st",
-  render_errors: [view: NanoPlannerWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: NanoPlanner.PubSub, adapter: Phoenix.PubSub.PG2]
+    "kps8yDrZtl8+M3P2USEuThL59JBPPdMESwoayN1f4Q9a4YTyhr0fdO6cMcoF06Ef",
+  render_errors: [
+    view: NanoPlannerWeb.ErrorView,
+    accepts: ~w(html json),
+    layout: false
+  ],
+  pubsub_server: NanoPlanner.PubSub,
+  live_view: [signing_salt: "7eTMtacR"]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+# Configures the default time zone
+config :nano_planner,
+  default_time_zone: "Asia/Tokyo"
+
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
-
-# Configures the default time zone
-config :nano_planner, default_time_zone: "Asia/Tokyo"
-
-# Configures the default locale
-config :nano_planner, NanoPlannerWeb.Gettext, default_locale: "ja"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
