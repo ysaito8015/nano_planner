@@ -27,6 +27,7 @@ defmodule NanoPlannerWeb.PlanItemController do
 
   def create(conn, %{"plan_item" => plan_item_params}) do
     Schedule.create_plan_item(plan_item_params)
+
     conn
     |> put_flash(:info, "予定を追加しました。")
     |> redirect(to: Routes.plan_item_path(conn, :index))
@@ -46,6 +47,7 @@ defmodule NanoPlannerWeb.PlanItemController do
   def update(conn, %{"id" => id, "plan_item" => plan_item_params}) do
     plan_item = Schedule.get_plan_item!(id)
     Schedule.update_plan_item(plan_item, plan_item_params)
+
     conn
     |> put_flash(:info, "予定を変更しました。")
     |> redirect(to: Routes.plan_item_path(conn, :index))
@@ -54,6 +56,7 @@ defmodule NanoPlannerWeb.PlanItemController do
   def delete(conn, %{"id" => id}) do
     plan_item = Schedule.get_plan_item!(id)
     Schedule.delete_plan_item(plan_item)
+
     conn
     |> put_flash(:info, "予定を削除しました。")
     |> redirect(to: Routes.plan_item_path(conn, :index))
