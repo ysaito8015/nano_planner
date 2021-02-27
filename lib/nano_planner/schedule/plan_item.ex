@@ -20,9 +20,13 @@ defmodule NanoPlanner.Schedule.PlanItem do
     timestamps(type: :utc_datetime)
   end
 
-  @allowed_fields [
+  @common_fields [
     :name,
     :description,
+    :all_day
+  ]
+
+  @date_time_fields [
     :s_date,
     :s_hour,
     :s_minute,
@@ -31,12 +35,28 @@ defmodule NanoPlanner.Schedule.PlanItem do
     :e_minute
   ]
 
+  @date_fields [
+    :starts_on,
+    :ends_on
+  ]
+
   @doc false
-  def changeset(plan_item, attrs) do
+  def changeset(plan_item, %{"all_day" => "false"} = attrs) do
     plan_item
-    |> cast(attrs, @allowed_fields)
+    |> cast(attrs, @common_fields ++ @date_time_fields)
     |> change_starts_at()
     |> change_ends_at()
+  end
+
+  def changeset(plan_item, %{"all_day" => "true"} = attrs) do
+    plan_item
+    |> cast(attrs, @common_fields ++ @date_fields)
+    |> change_time_boundaries()
+  end
+
+  def changeset(plan_item, attrs) do
+    plan_item
+    |> cast(attrs, @common_fields)
   end
 
   defp change_starts_at(changeset) do
@@ -61,6 +81,23 @@ defmodule NanoPlanner.Schedule.PlanItem do
     date
     |> Timex.to_datetime(time_zone())
     |> Timex.shift(hours: hour, minutes: minute)
+  end
+
+  defp change_time_boundaries(changeset) do
+    tz = time_zone()
+
+    s =
+      get_field(changeset, :starts_on)
+      |> Timex.to_datetime(tz)
+
+    e =
+      get_field(changeset, :ends_on)
+      |> Timex.to_datetime(tz)
+      |> Timex.shift(days: 1)
+
+    changeset
+    |> put_change(:starts_at, s)
+    |> put_change(:ends_at, e)
   end
 
   defp time_zone do
