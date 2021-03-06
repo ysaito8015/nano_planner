@@ -20,8 +20,11 @@ div.date-and-time {
     margin-right: 1rem;
   }
 }
-div.fate-picker {
+div.date-picker {
   input.form-control {
     width: auto;
   }
+}
+div.js-date-and-time, div.js-date-picker {
+  display: none;
 }

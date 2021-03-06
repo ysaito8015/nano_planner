@@ -23,3 +23,5 @@ import "@fortawesome/fontawesome-free/js/brands"
 import $ from "jquery"
 window.jQuery = $
 window.$ = $
+
+import "./plan_item_form"
